@@ -61,12 +61,14 @@ struct TrustScoreView: View {
 }
 
 // MARK: - Preview
-#Preview {
-    VStack(spacing: 20) {
-        TrustScoreView(score: 72)
-        TrustScoreView(score: 45)
-        TrustScoreView(score: 25)
+struct TrustScoreView_Previews: PreviewProvider {
+    static var previews: some View {
+        VStack(spacing: 20) {
+            TrustScoreView(score: 72)
+            TrustScoreView(score: 45)
+            TrustScoreView(score: 25)
+        }
+        .padding()
+        .background(Color.silverBackground)
     }
-    .padding()
-    .background(Color.silverBackground)
 }

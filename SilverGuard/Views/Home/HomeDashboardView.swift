@@ -359,6 +359,8 @@ private struct BadgeRow: View {
 }
 
 // MARK: - Preview
-#Preview {
-    HomeDashboardView(state: PracticeState(), selectedTab: .constant(0))
+struct HomeDashboardView_Previews: PreviewProvider {
+    static var previews: some View {
+        HomeDashboardView(state: PracticeState(), selectedTab: .constant(0))
+    }
 }

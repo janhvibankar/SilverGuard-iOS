@@ -115,12 +115,14 @@ struct RiskMeterView: View {
 }
 
 // MARK: - Preview
-#Preview {
-    VStack(spacing: 20) {
-        RiskMeterView(currentLevel: .safe)
-        RiskMeterView(currentLevel: .suspicious)
-        RiskMeterView(currentLevel: .highRisk, percentage: 85)
+struct RiskMeterView_Previews: PreviewProvider {
+    static var previews: some View {
+        VStack(spacing: 20) {
+            RiskMeterView(currentLevel: .safe)
+            RiskMeterView(currentLevel: .suspicious)
+            RiskMeterView(currentLevel: .highRisk, percentage: 85)
+        }
+        .padding()
+        .background(Color.silverBackground)
     }
-    .padding()
-    .background(Color.silverBackground)
 }

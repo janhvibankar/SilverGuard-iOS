@@ -40,14 +40,16 @@ struct ContentCard<Content: View>: View {
 }
 
 // MARK: - Preview
-#Preview {
-    VStack(spacing: 16) {
-        SectionHeader(title: "Your Safety Badges", trailingText: "2 of 12")
-        ContentCard {
-            Text("Hello, world!")
-                .font(SilverGuardTypography.bodyLG)
+struct ContentCard_Previews: PreviewProvider {
+    static var previews: some View {
+        VStack(spacing: 16) {
+            SectionHeader(title: "Your Safety Badges", trailingText: "2 of 12")
+            ContentCard {
+                Text("Hello, world!")
+                    .font(SilverGuardTypography.bodyLG)
+            }
         }
+        .padding()
+        .background(Color.silverBackground)
     }
-    .padding()
-    .background(Color.silverBackground)
 }

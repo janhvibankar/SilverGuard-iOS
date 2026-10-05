@@ -127,12 +127,14 @@ struct DestructiveButton: View {
 }
 
 // MARK: - Preview
-#Preview {
-    VStack(spacing: 16) {
-        PrimaryButton(title: "Start Practice", systemImage: "arrow.right") {}
-        SecondaryButton(title: "Practice Again", systemImage: "arrow.clockwise") {}
-        DestructiveButton(title: "Hang Up", systemImage: "phone.down.fill") {}
+struct PrimaryButton_Previews: PreviewProvider {
+    static var previews: some View {
+        VStack(spacing: 16) {
+            PrimaryButton(title: "Start Practice", systemImage: "arrow.right") {}
+            SecondaryButton(title: "Practice Again", systemImage: "arrow.clockwise") {}
+            DestructiveButton(title: "Hang Up", systemImage: "phone.down.fill") {}
+        }
+        .padding()
+        .background(Color.silverBackground)
     }
-    .padding()
-    .background(Color.silverBackground)
 }

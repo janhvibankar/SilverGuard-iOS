@@ -108,14 +108,16 @@ struct MetaTag: View {
 }
 
 // MARK: - Preview
-#Preview {
-    ScrollView {
-        VStack(spacing: 16) {
-            ForEach(Scenario.mockScenarios) { s in
-                ScenarioCard(scenario: s) {}
+struct ScenarioCard_Previews: PreviewProvider {
+    static var previews: some View {
+        ScrollView {
+            VStack(spacing: 16) {
+                ForEach(Scenario.mockScenarios) { s in
+                    ScenarioCard(scenario: s) {}
+                }
             }
+            .padding()
         }
-        .padding()
+        .background(Color.silverBackground)
     }
-    .background(Color.silverBackground)
 }

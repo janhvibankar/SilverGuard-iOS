@@ -268,8 +268,10 @@ private struct GoldenRuleCard: View {
 }
 
 // MARK: - Preview
-#Preview {
-    NavigationStack {
-        ScenarioBriefingView(scenario: Scenario.featuredScenario, state: PracticeState())
+struct ScenarioBriefingView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationStack {
+            ScenarioBriefingView(scenario: Scenario.featuredScenario, state: PracticeState())
+        }
     }
 }

@@ -198,6 +198,8 @@ private struct HelpCard: View {
 }
 
 // MARK: - Preview
-#Preview {
-    ScenarioSelectionView(state: PracticeState())
+struct ScenarioSelectionView_Previews: PreviewProvider {
+    static var previews: some View {
+        ScenarioSelectionView(state: PracticeState())
+    }
 }

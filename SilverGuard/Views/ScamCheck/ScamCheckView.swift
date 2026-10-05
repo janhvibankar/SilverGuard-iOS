@@ -94,4 +94,8 @@ private struct QuickExampleRow: View {
     }
 }
 
-#Preview { ScamCheckView() }
+struct ScamCheckView_Previews: PreviewProvider {
+    static var previews: some View {
+        ScamCheckView()
+    }
+}

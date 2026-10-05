@@ -418,8 +418,10 @@ private struct SafeMoveButton: View {
 }
 
 // MARK: - Preview
-#Preview {
-    NavigationStack {
-        LiveSimulationView(scenario: Scenario.featuredScenario, state: PracticeState())
+struct LiveSimulationView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationStack {
+            LiveSimulationView(scenario: Scenario.featuredScenario, state: PracticeState())
+        }
     }
 }

@@ -109,4 +109,8 @@ private struct FamilyMemberRow: View {
     }
 }
 
-#Preview { FamilyView() }
+struct FamilyView_Previews: PreviewProvider {
+    static var previews: some View {
+        FamilyView()
+    }
+}
