@@ -1,0 +1,462 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AA000001 /* SilverGuardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100001 /* SilverGuardApp.swift */; };
+		AA000002 /* SilverGuardColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100002 /* SilverGuardColors.swift */; };
+		AA000003 /* SilverGuardTypography.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100003 /* SilverGuardTypography.swift */; };
+		AA000004 /* SilverGuardTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100004 /* SilverGuardTheme.swift */; };
+		AA000005 /* Scenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100005 /* Scenario.swift */; };
+		AA000006 /* PracticeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100006 /* PracticeState.swift */; };
+		AA000007 /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100007 /* PrimaryButton.swift */; };
+		AA000008 /* TrustScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100008 /* TrustScoreView.swift */; };
+		AA000009 /* RiskMeterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100009 /* RiskMeterView.swift */; };
+		AA000010 /* ScenarioCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100010 /* ScenarioCard.swift */; };
+		AA000011 /* ContentCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100011 /* ContentCard.swift */; };
+		AA000012 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100012 /* MainTabView.swift */; };
+		AA000013 /* HomeDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100013 /* HomeDashboardView.swift */; };
+		AA000014 /* ScenarioSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100014 /* ScenarioSelectionView.swift */; };
+		AA000015 /* ScenarioBriefingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100015 /* ScenarioBriefingView.swift */; };
+		AA000016 /* LiveSimulationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100016 /* LiveSimulationView.swift */; };
+		AA000017 /* ScamCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100017 /* ScamCheckView.swift */; };
+		AA000018 /* FamilyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100018 /* FamilyView.swift */; };
+		AA000019 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA100019 /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		AA100001 /* SilverGuardApp.swift */        = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SilverGuardApp.swift;        sourceTree = "<group>"; };
+		AA100002 /* SilverGuardColors.swift */     = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SilverGuardColors.swift;     sourceTree = "<group>"; };
+		AA100003 /* SilverGuardTypography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SilverGuardTypography.swift; sourceTree = "<group>"; };
+		AA100004 /* SilverGuardTheme.swift */      = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SilverGuardTheme.swift;      sourceTree = "<group>"; };
+		AA100005 /* Scenario.swift */              = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scenario.swift;              sourceTree = "<group>"; };
+		AA100006 /* PracticeState.swift */         = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeState.swift;         sourceTree = "<group>"; };
+		AA100007 /* PrimaryButton.swift */         = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButton.swift;         sourceTree = "<group>"; };
+		AA100008 /* TrustScoreView.swift */        = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrustScoreView.swift;        sourceTree = "<group>"; };
+		AA100009 /* RiskMeterView.swift */         = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiskMeterView.swift;         sourceTree = "<group>"; };
+		AA100010 /* ScenarioCard.swift */          = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScenarioCard.swift;          sourceTree = "<group>"; };
+		AA100011 /* ContentCard.swift */           = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentCard.swift;           sourceTree = "<group>"; };
+		AA100012 /* MainTabView.swift */           = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift;           sourceTree = "<group>"; };
+		AA100013 /* HomeDashboardView.swift */     = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDashboardView.swift;     sourceTree = "<group>"; };
+		AA100014 /* ScenarioSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScenarioSelectionView.swift; sourceTree = "<group>"; };
+		AA100015 /* ScenarioBriefingView.swift */  = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScenarioBriefingView.swift;  sourceTree = "<group>"; };
+		AA100016 /* LiveSimulationView.swift */    = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveSimulationView.swift;    sourceTree = "<group>"; };
+		AA100017 /* ScamCheckView.swift */         = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScamCheckView.swift;         sourceTree = "<group>"; };
+		AA100018 /* FamilyView.swift */            = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyView.swift;            sourceTree = "<group>"; };
+		AA100019 /* Assets.xcassets */             = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets;          sourceTree = "<group>"; };
+		AA200000 /* SilverGuard.app */             = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0;               path = SilverGuard.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA300000 /* Info.plist */                  = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist;                    sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		AA_ROOT /* / */ = {
+			isa = PBXGroup;
+			children = (
+				AA_SILVERGUARD /* SilverGuard */,
+				AA_PRODUCTS    /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AA_PRODUCTS = {
+			isa = PBXGroup;
+			children = (
+				AA200000 /* SilverGuard.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AA_SILVERGUARD = {
+			isa = PBXGroup;
+			children = (
+				AA_APP        /* App */,
+				AA_MODELS     /* Models */,
+				AA_VIEWS      /* Views */,
+				AA_COMPONENTS /* Components */,
+				AA_THEME      /* Theme */,
+				AA_RESOURCES  /* Resources */,
+			);
+			name = SilverGuard;
+			path = SilverGuard;
+			sourceTree = "<group>";
+		};
+		AA_APP = {
+			isa = PBXGroup;
+			children = (
+				AA100001 /* SilverGuardApp.swift */,
+			);
+			name = App;
+			path = App;
+			sourceTree = "<group>";
+		};
+		AA_MODELS = {
+			isa = PBXGroup;
+			children = (
+				AA100005 /* Scenario.swift */,
+				AA100006 /* PracticeState.swift */,
+			);
+			name = Models;
+			path = Models;
+			sourceTree = "<group>";
+		};
+		AA_VIEWS = {
+			isa = PBXGroup;
+			children = (
+				AA100012 /* MainTabView.swift */,
+				AA_HOME     /* Home */,
+				AA_PRACTICE /* Practice */,
+				AA_SCAMCHECK /* ScamCheck */,
+				AA_FAMILY   /* Family */,
+			);
+			name = Views;
+			path = Views;
+			sourceTree = "<group>";
+		};
+		AA_HOME = {
+			isa = PBXGroup;
+			children = (
+				AA100013 /* HomeDashboardView.swift */,
+			);
+			name = Home;
+			path = Home;
+			sourceTree = "<group>";
+		};
+		AA_PRACTICE = {
+			isa = PBXGroup;
+			children = (
+				AA100014 /* ScenarioSelectionView.swift */,
+				AA100015 /* ScenarioBriefingView.swift */,
+				AA100016 /* LiveSimulationView.swift */,
+			);
+			name = Practice;
+			path = Practice;
+			sourceTree = "<group>";
+		};
+		AA_SCAMCHECK = {
+			isa = PBXGroup;
+			children = (
+				AA100017 /* ScamCheckView.swift */,
+			);
+			name = ScamCheck;
+			path = ScamCheck;
+			sourceTree = "<group>";
+		};
+		AA_FAMILY = {
+			isa = PBXGroup;
+			children = (
+				AA100018 /* FamilyView.swift */,
+			);
+			name = Family;
+			path = Family;
+			sourceTree = "<group>";
+		};
+		AA_COMPONENTS = {
+			isa = PBXGroup;
+			children = (
+				AA100007 /* PrimaryButton.swift */,
+				AA100008 /* TrustScoreView.swift */,
+				AA100009 /* RiskMeterView.swift */,
+				AA100010 /* ScenarioCard.swift */,
+				AA100011 /* ContentCard.swift */,
+			);
+			name = Components;
+			path = Components;
+			sourceTree = "<group>";
+		};
+		AA_THEME = {
+			isa = PBXGroup;
+			children = (
+				AA100002 /* SilverGuardColors.swift */,
+				AA100003 /* SilverGuardTypography.swift */,
+				AA100004 /* SilverGuardTheme.swift */,
+			);
+			name = Theme;
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		AA_RESOURCES = {
+			isa = PBXGroup;
+			children = (
+				AA100019 /* Assets.xcassets */,
+				AA300000 /* Info.plist */,
+			);
+			name = Resources;
+			path = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AA_TARGET /* SilverGuard */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA_CFGLIST;
+			buildPhases = (
+				AA_SOURCES   /* Sources */,
+				AA_RESOURCES_PHASE /* Resources */,
+			);
+			buildRules = ();
+			dependencies = ();
+			name = SilverGuard;
+			productName = SilverGuard;
+			productReference = AA200000 /* SilverGuard.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AA_PROJECT /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1530;
+				LastUpgradeCheck = 1530;
+				TargetAttributes = {
+					AA_TARGET = {
+						CreatedOnToolsVersion = 15.3;
+					};
+				};
+			};
+			buildConfigurationList = AA_PROJ_CFGLIST;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AA_ROOT;
+			productRefGroup = AA_PRODUCTS;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AA_TARGET /* SilverGuard */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AA_SOURCES = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA000001 /* SilverGuardApp.swift in Sources */,
+				AA000002 /* SilverGuardColors.swift in Sources */,
+				AA000003 /* SilverGuardTypography.swift in Sources */,
+				AA000004 /* SilverGuardTheme.swift in Sources */,
+				AA000005 /* Scenario.swift in Sources */,
+				AA000006 /* PracticeState.swift in Sources */,
+				AA000007 /* PrimaryButton.swift in Sources */,
+				AA000008 /* TrustScoreView.swift in Sources */,
+				AA000009 /* RiskMeterView.swift in Sources */,
+				AA000010 /* ScenarioCard.swift in Sources */,
+				AA000011 /* ContentCard.swift in Sources */,
+				AA000012 /* MainTabView.swift in Sources */,
+				AA000013 /* HomeDashboardView.swift in Sources */,
+				AA000014 /* ScenarioSelectionView.swift in Sources */,
+				AA000015 /* ScenarioBriefingView.swift in Sources */,
+				AA000016 /* LiveSimulationView.swift in Sources */,
+				AA000017 /* ScamCheckView.swift in Sources */,
+				AA000018 /* FamilyView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AA_RESOURCES_PHASE = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA000019 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		AA_DEBUG_TARGET = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "SilverGuard/Resources/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.silverguard.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				SUPPORTS_MACCATALYST = NO;
+			};
+			name = Debug;
+		};
+		AA_RELEASE_TARGET = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "SilverGuard/Resources/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.silverguard.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = YES;
+				SUPPORTS_MACCATALYST = NO;
+			};
+			name = Release;
+		};
+		AA_DEBUG_PROJ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		AA_RELEASE_PROJ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AA_PROJ_CFGLIST = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA_DEBUG_PROJ,
+				AA_RELEASE_PROJ,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA_CFGLIST = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA_DEBUG_TARGET,
+				AA_RELEASE_TARGET,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+	}; /* objects end */
+
+	rootObject = AA_PROJECT /* Project object */;
+}

@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>SilverGuard – Elderly Scam Defense App</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ═══════════════════════════════════════════
+     DESIGN TOKENS
+  ═══════════════════════════════════════════ */
+  :root {
+    --bg:            #FCF9F8;
+    --surface:       #FFFFFF;
+    --surface-low:   #F6F3F2;
+    --surface-high:  #EAE7E7;
+    --primary:       #00263F;
+    --primary-cont:  #0B3C5D;
+    --text:          #1C1B1B;
+    --text-2:        #42474E;
+    --border:        #E2DDD5;
+    --outline:       #C2C7CE;
+    --safe:          #1B7F3B;
+    --safe-cont:     #E8F5EC;
+    --warn:          #B26A00;
+    --warn-cont:     #FFF3E0;
+    --danger:        #B3261E;
+    --danger-cont:   #FFDAD6;
+    --practice-bg:   #EEF4FB;
+    --radius-sm:     8px;
+    --radius-md:     12px;
+    --radius-lg:     16px;
+    --radius-xl:     20px;
+    --radius-full:   9999px;
+    --shadow:        0 4px 16px rgba(11,60,93,0.06);
+  }
+
+  /* ═══════════════════════════════════════════
+     RESET & BASE
+  ═══════════════════════════════════════════ */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 16px; }
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #2C3E50;
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 24px 16px 40px;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  /* ═══════════════════════════════════════════
+     PHONE FRAME
+  ═══════════════════════════════════════════ */
+  .phone-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .screen-label {
+    color: rgba(255,255,255,0.55);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+  }
+  .phone {
+    width: 375px;
+    height: 812px;
+    background: var(--bg);
+    border-radius: 50px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    box-shadow:
+      0 0 0 2px #1a1a1a,
+      0 0 0 8px #2a2a2a,
+      0 30px 60px rgba(0,0,0,0.5);
+  }
+  /* Dynamic island */
+  .phone::before {
+    content: '';
+    position: absolute;
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 34px;
+    background: #000;
+    border-radius: 20px;
+    z-index: 100;
+  }
+
+  /* ═══════════════════════════════════════════
+     SCROLLABLE CONTENT AREA
+  ═══════════════════════════════════════════ */
+  .screen {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-top: 60px; /* clear dynamic island */
+    scrollbar-width: none;
+  }
+  .screen::-webkit-scrollbar { display: none; }
+
+  /* ═══════════════════════════════════════════
+     TOP NAV BAR
+  ═══════════════════════════════════════════ */
+  .nav-bar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--primary-cont);
+    font-size: 20px;
+    font-weight: 700;
+  }
+  .nav-brand svg { width: 22px; height: 22px; flex-shrink: 0; }
+  .nav-actions { display: flex; align-items: center; gap: 12px; }
+  .nav-icon-btn {
+    width: 44px; height: 44px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text); cursor: pointer; border-radius: 50%;
+    transition: background .15s;
+  }
+  .nav-icon-btn:hover { background: var(--surface-high); }
+  .nav-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--primary-cont);
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 15px;
+  }
+
+  /* ═══════════════════════════════════════════
+     CONTENT PADDING
+  ═══════════════════════════════════════════ */
+  .content { padding: 0 20px 120px; }
+  .gap-md { margin-top: 16px; }
+  .gap-lg { margin-top: 20px; }
+
+  /* ═══════════════════════════════════════════
+     CARD
+  ═══════════════════════════════════════════ */
+  .card {
+    background: var(--surface);
+    border-radius: var(--radius-xl);
+    border: 2px solid var(--border);
+    box-shadow: var(--shadow);
+    padding: 20px;
+  }
+  .card-tinted {
+    background: var(--practice-bg);
+    border-radius: var(--radius-xl);
+    border: 2px solid var(--border);
+    box-shadow: var(--shadow);
+    padding: 20px;
+  }
+
+  /* ═══════════════════════════════════════════
+     BUTTONS
+  ═══════════════════════════════════════════ */
+  .btn-primary {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    width: 100%; height: 64px;
+    background: var(--primary-cont);
+    color: #fff;
+    font-size: 20px; font-weight: 600;
+    border: none; border-radius: var(--radius-lg);
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(11,60,93,0.25);
+    transition: transform .1s, box-shadow .1s;
+  }
+  .btn-primary:active { transform: scale(0.97); box-shadow: 0 1px 4px rgba(11,60,93,.15); }
+  .btn-secondary {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    width: 100%; height: 64px;
+    background: var(--surface);
+    color: var(--primary-cont);
+    font-size: 20px; font-weight: 600;
+    border: 2px solid var(--primary-cont); border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: transform .1s;
+  }
+  .btn-secondary:active { transform: scale(0.97); }
+  .btn-destructive {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    width: 100%; height: 64px;
+    background: var(--danger);
+    color: #fff;
+    font-size: 20px; font-weight: 600;
+    border: none; border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: transform .1s;
+  }
+
+  /* ═══════════════════════════════════════════
+     BOTTOM TAB BAR
+  ═══════════════════════════════════════════ */
+  .tab-bar {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 84px;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: stretch;
+    z-index: 60;
+  }
+  .tab-item {
+    flex: 1;
+    display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+    padding-top: 0;
+    cursor: pointer;
+    color: var(--text-2);
+    transition: color .15s;
+    position: relative;
+  }
+  .tab-item.active { color: var(--primary-cont); }
+  .tab-indicator {
+    width: calc(100% - 32px);
+    height: 3px;
+    border-radius: 3px;
+    background: transparent;
+    margin-bottom: 6px;
+    align-self: stretch;
+    margin: 0 16px;
+    border-radius: var(--radius-full);
+    transition: background .2s;
+  }
+  .tab-item.active .tab-indicator { background: var(--primary-cont); }
+  .tab-icon { font-size: 24px; margin-top: 4px; }
+  .tab-label { font-size: 13px; font-weight: 600; margin-top: 2px; }
+
+  /* ═══════════════════════════════════════════
+     TRUST SCORE GAUGE
+  ═══════════════════════════════════════════ */
+  .gauge-wrap {
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+  }
+  .gauge-svg { width: 160px; height: 160px; }
+  .gauge-title {
+    font-size: 22px; font-weight: 700; color: var(--primary-cont);
+  }
+  .gauge-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--safe-cont);
+    color: var(--safe);
+    font-size: 14px; font-weight: 700;
+    padding: 6px 14px; border-radius: var(--radius-full);
+  }
+  .gauge-subtitle {
+    font-size: 17px; color: var(--text-2); text-align: center; line-height: 1.5;
+  }
+  .gauge-subtitle strong { color: var(--text); }
+
+  /* ═══════════════════════════════════════════
+     SECTION HEADER
+  ═══════════════════════════════════════════ */
+  .section-header {
+    display: flex; align-items: baseline; justify-content: space-between;
+  }
+  .section-title { font-size: 22px; font-weight: 700; color: var(--text); }
+  .section-sub { font-size: 14px; color: var(--text-2); }
+
+  /* ═══════════════════════════════════════════
+     META TAGS / CHIPS
+  ═══════════════════════════════════════════ */
+  .chip {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 13px; font-weight: 500;
+    padding: 5px 10px; border-radius: var(--radius-full);
+    background: var(--surface-high); color: var(--text-2);
+    white-space: nowrap;
+  }
+  .chip.safe    { background: var(--safe-cont);    color: var(--safe); }
+  .chip.warn    { background: var(--warn-cont);    color: var(--warn); }
+  .chip.danger  { background: var(--danger-cont);  color: var(--danger); }
+  .chip.primary { background: var(--practice-bg);  color: var(--primary-cont); }
+
+  /* ═══════════════════════════════════════════
+     STATS ROW
+  ═══════════════════════════════════════════ */
+  .stats-row {
+    display: flex; align-items: center;
+    background: var(--surface);
+    border-radius: var(--radius-xl);
+    border: 2px solid var(--border);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .stat-cell {
+    flex: 1; display: flex; flex-direction: column; align-items: center;
+    padding: 14px 8px; gap: 4px; position: relative;
+  }
+  .stat-cell + .stat-cell::before {
+    content: '';
+    position: absolute; left: 0; top: 20%; bottom: 20%;
+    width: 1px; background: var(--border);
+  }
+  .stat-icon {
+    width: 44px; height: 44px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-size: 18px;
+  }
+  .stat-value { font-size: 22px; font-weight: 700; color: var(--text); }
+  .stat-label { font-size: 13px; color: var(--text-2); }
+
+  /* ═══════════════════════════════════════════
+     BADGE LIST
+  ═══════════════════════════════════════════ */
+  .badge-list {
+    background: var(--surface);
+    border-radius: var(--radius-xl);
+    border: 2px solid var(--border);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .badge-row {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 20px;
+    position: relative;
+  }
+  .badge-row + .badge-row::before {
+    content: '';
+    position: absolute; top: 0; left: 82px; right: 0;
+    height: 1px; background: var(--border);
+  }
+  .badge-row.dimmed { opacity: 0.55; }
+  .badge-icon-wrap {
+    width: 48px; height: 48px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center; font-size: 20px;
+    flex-shrink: 0;
+  }
+  .badge-text { flex: 1; }
+  .badge-name { font-size: 16px; font-weight: 600; color: var(--text); }
+  .badge-sub  { font-size: 13px; color: var(--text-2); }
+  .badge-check { font-size: 22px; color: var(--safe); }
+  .badge-next  { font-size: 13px; font-weight: 600; color: var(--text-2); }
+
+  /* ═══════════════════════════════════════════
+     PRACTICE HEADER STRIP
+  ═══════════════════════════════════════════ */
+  .practice-strip {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--primary-cont); color: #fff;
+    font-size: 11px; font-weight: 700; line-height: 1.2;
+    padding: 8px 12px; border-radius: var(--radius-full);
+  }
+
+  /* ═══════════════════════════════════════════
+     SCENARIO SELECTION
+  ═══════════════════════════════════════════ */
+  .safe-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--safe-cont); color: var(--safe);
+    font-size: 13px; font-weight: 700; padding: 6px 12px;
+    border-radius: var(--radius-full);
+  }
+  .safe-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--safe); }
+  .search-bar {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--surface); border: 2px solid var(--border);
+    border-radius: var(--radius-lg); padding: 12px 16px;
+    color: var(--text-2); font-size: 17px;
+  }
+  .format-tabs { display: flex; gap: 10px; }
+  .format-tab {
+    display: flex; align-items: center; gap: 7px;
+    font-size: 14px; font-weight: 600; padding: 10px 16px;
+    border-radius: var(--radius-full); cursor: pointer;
+    border: 2px solid var(--border);
+    background: var(--surface); color: var(--primary-cont);
+    transition: background .15s, color .15s;
+    min-height: 48px;
+  }
+  .format-tab.active {
+    background: var(--primary-cont); color: #fff; border-color: var(--primary-cont);
+  }
+  .format-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 1.1px;
+    color: var(--text-2); margin-bottom: 8px;
+  }
+  .cat-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+  .cat-danger  { color: var(--danger); }
+  .cat-primary { color: var(--primary-cont); }
+  .scenario-icon-wrap {
+    width: 52px; height: 52px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-size: 22px;
+    flex-shrink: 0;
+  }
+  .sc-title { font-size: 22px; font-weight: 700; color: var(--text); line-height: 1.25; }
+  .sc-desc  { font-size: 17px; color: var(--text-2); line-height: 1.5; }
+
+  /* ═══════════════════════════════════════════
+     BRIEFING SCREEN
+  ═══════════════════════════════════════════ */
+  .step-dots { display: flex; gap: 8px; align-items: center; }
+  .step-dot {
+    border-radius: 50%; background: var(--border);
+    transition: all .2s;
+  }
+  .step-dot.active { background: var(--primary-cont); width: 10px; height: 10px; }
+  .step-dot:not(.active) { width: 8px; height: 8px; }
+  .briefing-icon-wrap {
+    width: 96px; height: 96px; border-radius: 50%; background: var(--practice-bg);
+    display: flex; align-items: center; justify-content: center; font-size: 38px;
+    position: relative; margin: 0 auto;
+  }
+  .briefing-badge {
+    position: absolute; top: -2px; right: -2px;
+    width: 28px; height: 28px; border-radius: 50%; background: var(--safe);
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 13px;
+  }
+  .format-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--surface-high); border: 1px solid var(--border);
+    border-radius: var(--radius-full); padding: 8px 14px;
+    font-size: 14px; font-weight: 600; color: var(--text-2);
+  }
+  .reassurance-card {
+    background: var(--practice-bg); border-radius: var(--radius-xl);
+    border: 1.5px solid rgba(194,199,206,0.5); padding: 18px;
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .situation-card { }
+  .situation-img {
+    width: 100%; height: 150px; border-radius: var(--radius-lg);
+    background: var(--surface-low); position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 56px; color: var(--border);
+  }
+  .caller-id-overlay {
+    position: absolute; bottom: 10px; left: 10px;
+    background: rgba(255,255,255,0.92); border-radius: var(--radius-full);
+    display: flex; align-items: center; gap: 6px;
+    padding: 6px 12px; font-size: 12px; font-weight: 600; color: var(--text);
+  }
+  .golden-rule {
+    background: var(--warn-cont); border-radius: var(--radius-xl);
+    border: 2px solid rgba(178,106,0,0.3); padding: 18px;
+  }
+  .golden-rule-title {
+    display: flex; align-items: center; gap: 8px;
+    color: var(--danger); font-size: 17px; font-weight: 700; margin-bottom: 10px;
+  }
+  .golden-rule-phrase {
+    text-align: center; font-size: 22px; font-weight: 700; color: #7C1600;
+    background: var(--surface); border-radius: var(--radius-md);
+    padding: 14px; margin-bottom: 10px;
+    border: 1px solid rgba(179,38,30,0.15);
+  }
+  .golden-rule-desc { font-size: 17px; color: #7C4A00; line-height: 1.55; }
+  .back-home-btn {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    color: var(--text-2); font-size: 15px; font-weight: 500;
+    min-height: 48px; cursor: pointer; background: none; border: none;
+    width: 100%;
+  }
+
+  /* ═══════════════════════════════════════════
+     LIVE SIMULATION SCREEN
+  ═══════════════════════════════════════════ */
+  .caller-card {
+    display: flex; align-items: center; gap: 14px;
+    background: var(--surface); border-radius: var(--radius-xl);
+    border: 2px solid var(--border); box-shadow: var(--shadow); padding: 18px;
+  }
+  .caller-icon {
+    width: 48px; height: 48px; border-radius: 50%; background: var(--safe-cont);
+    display: flex; align-items: center; justify-content: center; font-size: 20px;
+    flex-shrink: 0;
+  }
+  .caller-info { flex: 1; }
+  .caller-name { font-size: 16px; font-weight: 700; color: var(--text); }
+  .caller-num  { font-size: 13px; color: var(--text-2); }
+  .call-timer { display: flex; align-items: center; gap: 6px; }
+  .timer-dot  { width: 8px; height: 8px; border-radius: 50%; background: var(--danger); }
+  .timer-val  { font-size: 18px; font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; }
+
+  /* Risk Meter */
+  .risk-meter-wrap {
+    background: var(--surface); border-radius: var(--radius-xl);
+    border: 2px solid var(--border); box-shadow: var(--shadow); padding: 16px;
+  }
+  .risk-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .risk-label-txt { font-size: 10px; font-weight: 700; color: var(--text-2); line-height: 1.3; }
+  .risk-badge {
+    display: flex; align-items: center; gap: 5px;
+    margin-left: auto; padding: 6px 12px; border-radius: var(--radius-full);
+    font-size: 12px; font-weight: 700;
+  }
+  .risk-badge.danger { background: var(--danger-cont); color: var(--danger); }
+  .risk-bar-row { display: flex; gap: 4px; margin-bottom: 6px; }
+  .risk-seg {
+    flex: 1; border-radius: 4px; height: 12px; transition: height .2s;
+  }
+  .risk-seg.active { height: 16px; }
+  .risk-seg.safe   { background: var(--safe); }
+  .risk-seg.warn   { background: var(--warn); }
+  .risk-seg.dang   { background: var(--danger); }
+  .risk-labels-row { display: flex; }
+  .risk-seg-label {
+    flex: 1; text-align: center; font-size: 11px; font-weight: 600; color: var(--text-2);
+    display: flex; align-items: center; justify-content: center; gap: 3px;
+  }
+  .risk-seg-label.active-label.safe   { color: var(--safe); }
+  .risk-seg-label.active-label.warn   { color: var(--warn); }
+  .risk-seg-label.active-label.dang   { color: var(--danger); }
+
+  /* Audio */
+  .audio-row {
+    display: flex; align-items: center; gap: 8px;
+    color: var(--text-2); font-size: 14px;
+    padding: 6px 0;
+  }
+  .wave-bars { display: flex; gap: 3px; align-items: center; margin-left: auto; }
+  .wave-bar  {
+    width: 4px; background: var(--primary-cont); border-radius: 2px;
+    animation: wave 0.7s ease-in-out infinite alternate;
+  }
+  .wave-bar:nth-child(1) { animation-delay: 0s;   height: 10px; }
+  .wave-bar:nth-child(2) { animation-delay: 0.1s; height: 18px; }
+  .wave-bar:nth-child(3) { animation-delay: 0.2s; height: 12px; }
+  .wave-bar:nth-child(4) { animation-delay: 0.3s; height: 20px; }
+  .wave-bar:nth-child(5) { animation-delay: 0.15s;height: 8px; }
+  @keyframes wave {
+    from { transform: scaleY(0.5); opacity: 0.6; }
+    to   { transform: scaleY(1.0); opacity: 1; }
+  }
+
+  /* Speaker label */
+  .speaker-label {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 13px; color: var(--text-2); margin-bottom: 6px;
+  }
+  .msg-bubble {
+    background: var(--surface); border: 2px solid var(--border);
+    border-radius: var(--radius-lg); padding: 18px;
+    font-size: 18px; color: var(--text); line-height: 1.55;
+    margin-bottom: 14px;
+  }
+  .msg-danger { color: var(--danger); font-weight: 700; }
+  .red-flag-card {
+    background: var(--danger-cont); border-radius: var(--radius-xl);
+    border: 2px solid rgba(179,38,30,.3); padding: 18px; margin-bottom: 14px;
+  }
+  .red-flag-title {
+    display: flex; align-items: flex-start; gap: 8px;
+    color: var(--danger); font-size: 15px; font-weight: 700; margin-bottom: 8px;
+  }
+  .red-flag-body { font-size: 17px; color: #7C1600; line-height: 1.55; }
+  .waiting-row {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--surface-high); border-radius: var(--radius-md);
+    padding: 12px 16px; font-size: 14px; color: var(--text-2);
+    font-style: italic; margin-bottom: 18px;
+  }
+  .safe-move-header {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .safe-move-title { font-size: 22px; font-weight: 700; color: var(--text); }
+  .tap-hint { font-size: 13px; color: var(--text-2); text-align: right; line-height: 1.3; }
+
+  .choice-btn {
+    display: flex; align-items: center; gap: 14px;
+    background: var(--surface); border: 2px solid var(--border);
+    border-radius: var(--radius-xl); padding: 18px; width: 100%; text-align: left;
+    min-height: 72px; cursor: pointer;
+    transition: all .15s; box-shadow: var(--shadow); margin-bottom: 12px;
+  }
+  .choice-btn:hover { border-color: var(--outline); }
+  .choice-btn.selected-wrong {
+    border-color: var(--danger); background: var(--surface);
+  }
+  .choice-btn.selected-right {
+    border-color: var(--primary-cont); background: var(--primary-cont);
+    color: #fff;
+  }
+  .choice-icon { font-size: 22px; flex-shrink: 0; }
+  .choice-text { font-size: 19px; color: var(--text); flex: 1; line-height: 1.35; font-weight: 500; }
+  .choice-btn.selected-right .choice-text { color: #fff; }
+  .choice-btn.selected-wrong .choice-text { color: var(--danger); }
+  .choice-chevron { color: var(--outline); font-size: 14px; }
+  .choice-btn.selected-right .choice-chevron { color: rgba(255,255,255,0.6); }
+
+  /* SCAM CHECK */
+  .scam-input-area {
+    min-height: 140px; background: var(--surface-low); border: 2px solid var(--border);
+    border-radius: var(--radius-lg); padding: 16px;
+    font-size: 17px; color: var(--outline);
+    display: flex; align-items: flex-start;
+    margin-bottom: 14px;
+  }
+  .example-row {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 14px 0; position: relative; min-height: 48px;
+  }
+  .example-row + .example-row::before {
+    content: ''; position: absolute; top: 0; left: 34px; right: 0;
+    height: 1px; background: var(--border);
+  }
+
+  /* FAMILY */
+  .member-row {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 20px; position: relative;
+  }
+  .member-row + .member-row::before {
+    content: ''; position: absolute; top: 0; left: 82px; right: 0;
+    height: 1px; background: var(--border);
+  }
+  .member-avatar {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: var(--practice-bg);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; color: var(--primary-cont); flex-shrink: 0;
+  }
+
+  /* ═══════════════════════════════════════════
+     BACK BUTTON (in nav)
+  ═══════════════════════════════════════════ */
+  .nav-back {
+    display: flex; align-items: center; gap: 4px;
+    color: var(--primary-cont); font-size: 17px; font-weight: 500;
+    cursor: pointer; padding: 6px 0; min-height: 44px;
+  }
+  .nav-back:hover { opacity: 0.7; }
+
+  /* PAUSE BTN */
+  .pause-btn {
+    display: flex; align-items: center; gap: 6px;
+    background: var(--surface); border: 2px solid var(--border);
+    border-radius: var(--radius-full); padding: 8px 14px;
+    font-size: 14px; font-weight: 600; color: var(--text);
+    cursor: pointer; min-height: 44px; min-width: 88px;
+  }
+
+  /* ═══════════════════════════════════════════
+     TYPOGRAPHY
+  ═══════════════════════════════════════════ */
+  .headline-xl { font-size: 30px; font-weight: 700; color: var(--text); line-height: 1.2; }
+  .headline-lg { font-size: 26px; font-weight: 700; color: var(--text); line-height: 1.25; }
+  .headline-md { font-size: 22px; font-weight: 700; color: var(--text); }
+  .body-xl     { font-size: 20px; font-weight: 500; color: var(--text); }
+  .body-lg     { font-size: 17px; font-weight: 400; color: var(--text-2); line-height: 1.55; }
+
+  /* ═══════════════════════════════════════════
+     SCREEN VISIBILITY
+  ═══════════════════════════════════════════ */
+  .sg-screen { display: none; }
+  .sg-screen.visible { display: flex; flex-direction: column; height: 100%; }
+
+  /* ═══════════════════════════════════════════
+     TRANSITIONS
+  ═══════════════════════════════════════════ */
+  .phone { transition: none; }
+</style>
+</head>
+<body>
+
+<!-- ═══ PHONE 1: HOME ═══ -->
+<div class="phone-wrap">
+  <div class="screen-label">Home Dashboard</div>
+  <div class="phone" id="phone-home">
+    <div class="screen">
+      <!-- NAV -->
+      <div class="nav-bar">
+        <div class="nav-brand">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <polyline points="9 12 11 14 15 10"/>
+          </svg>
+          Home
+        </div>
+        <div class="nav-actions">
+          <div class="nav-icon-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="14" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
+          </div>
+          <div class="nav-avatar">👤</div>
+        </div>
+      </div>
+      <!-- CONTENT -->
+      <div class="content">
+        <!-- Greeting -->
+        <div class="gap-md" style="padding-top:4px">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between">
+            <div>
+              <div class="headline-lg">Good morning,</div>
+              <div class="headline-lg">Margaret</div>
+              <div class="body-lg" style="margin-top:4px">Tuesday, October 5 • Let's keep your accounts safe</div>
+            </div>
+            <div style="font-size:32px;margin-left:12px">👋</div>
+          </div>
+        </div>
+
+        <!-- Trust Score Card -->
+        <div class="card gap-md">
+          <div class="gauge-wrap">
+            <svg class="gauge-svg" viewBox="0 0 160 160">
+              <circle cx="80" cy="80" r="68" fill="none" stroke="#E2DDD5" stroke-width="12"/>
+              <circle cx="80" cy="80" r="68" fill="none" stroke="#0B3C5D" stroke-width="12"
+                stroke-linecap="round"
+                stroke-dasharray="427" stroke-dashoffset="115"
+                transform="rotate(-90 80 80)"/>
+              <text x="80" y="76" text-anchor="middle" font-size="30" font-weight="700" fill="#1C1B1B" font-family="Inter">72</text>
+              <text x="106" y="76" text-anchor="start" font-size="12" fill="#42474E" font-family="Inter">/ 100</text>
+              <text x="80" y="94" text-anchor="middle" font-size="10" font-weight="700" fill="#0B3C5D" font-family="Inter" letter-spacing="0.5">SAFE • ACTIVE</text>
+            </svg>
+            <div class="gauge-title">Your Trust Score</div>
+            <div class="gauge-badge">✅ +4 points this week</div>
+            <div class="gauge-subtitle">You are doing wonderful. <strong>6 scams avoided</strong> so far!</div>
+          </div>
+        </div>
+
+        <!-- Today's Practice Card -->
+        <div class="card-tinted gap-md">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+            <div class="practice-strip">⚙️ TODAY'S<br>PRACTICE</div>
+            <div class="body-lg" style="font-size:13px">Step 1 of 1</div>
+          </div>
+          <div class="headline-lg" style="margin-bottom:10px">Fake Bank Fraud Alert</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+            <div class="chip primary">📞 Phone Call</div>
+            <div class="chip">🕐 ~3 minutes</div>
+          </div>
+          <div class="body-lg" style="margin-bottom:16px">
+            Practice handling an urgent call claiming your debit card was locked. Learn the safe responses.
+          </div>
+          <button class="btn-primary" onclick="showPhone('phone-selection')">Start Practice →</button>
+        </div>
+
+        <!-- Stats Row -->
+        <div class="stats-row gap-md">
+          <div class="stat-cell">
+            <div class="stat-icon" style="background:var(--safe-cont);color:var(--safe)">✅</div>
+            <div class="stat-value">6</div>
+            <div class="stat-label">Scenarios</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-icon" style="background:var(--warn-cont);color:var(--warn)">🔥</div>
+            <div class="stat-value">3</div>
+            <div class="stat-label">Day Streak</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-icon" style="background:var(--practice-bg);color:var(--primary-cont)">🏆</div>
+            <div class="stat-value">2</div>
+            <div class="stat-label">Badges</div>
+          </div>
+        </div>
+
+        <!-- Safety Badges -->
+        <div class="section-header gap-lg">
+          <div class="section-title">Your Safety Badges</div>
+          <div class="section-sub">2 of 12</div>
+        </div>
+
+        <div class="badge-list gap-md">
+          <div class="badge-row">
+            <div class="badge-icon-wrap" style="background:var(--warn-cont)">🛡️</div>
+            <div class="badge-text">
+              <div class="badge-name">Gift Card Guardian</div>
+              <div class="badge-sub">Awarded yesterday</div>
+            </div>
+            <div class="badge-check">✅</div>
+          </div>
+          <div class="badge-row">
+            <div class="badge-icon-wrap" style="background:var(--safe-cont)">📵</div>
+            <div class="badge-text">
+              <div class="badge-name">Hang-Up Hero</div>
+              <div class="badge-sub">Awarded Friday</div>
+            </div>
+            <div class="badge-check">✅</div>
+          </div>
+          <div class="badge-row dimmed">
+            <div class="badge-icon-wrap" style="background:var(--surface-high)">🔒</div>
+            <div class="badge-text">
+              <div class="badge-name">Safe Word Star</div>
+              <div class="badge-sub">Complete today's call</div>
+            </div>
+            <div class="badge-next">Next up</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- TAB BAR -->
+    <div class="tab-bar">
+      <div class="tab-item active">
+        <div class="tab-indicator"></div>
+        <div class="tab-icon">🏠</div>
+        <div class="tab-label">Home</div>
+      </div>
+      <div class="tab-item" onclick="showPhone('phone-selection')">
+        <div class="tab-indicator"></div>
+        <div class="tab-icon">🎓</div>
+        <div class="tab-label">Practice</div>
+      </div>
+      <div class="tab-item">
+        <div class="tab-indicator"></div>
+        <div class="tab-icon">🛡️</div>
+        <div class="tab-label">Scam Check</div>
+      </div>
+      <div class="tab-item">
+        <div class="tab-indicator"></div>
+        <div class="tab-icon">👥</div>
+        <div class="tab-label">Family</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PHONE 2: SCENARIO SELECTION ═══ -->
+<div class="phone-wrap">
+  <div class="screen-label">Scenario Selection</div>
+  <div class="phone" id="phone-selection">
+    <div class="screen">
+      <div class="nav-bar">
+        <div class="nav-back" onclick="showPhone('phone-home')">‹ Home</div>
+        <div class="nav-brand">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <polyline points="9 12 11 14 15 10"/>
+          </svg>
+          Practice
+        </div>
+        <div class="nav-avatar">👤</div>
+      </div>
+      <div class="content">
+        <!-- Safe badge -->
+        <div style="padding-top:8px;margin-bottom:12px">
+          <div class="safe-pill"><div class="safe-dot"></div>100% Safe Simulation</div>
+        </div>
+
+        <div class="headline-xl" style="margin-bottom:6px">Choose a Practice</div>
+        <div class="body-lg" style="margin-bottom:14px">Pick any scenario to practice safely. Nothing here is real.</div>
+
+        <!-- Search -->
+        <div class="search-bar" style="margin-bottom:16px">
+          🔍 <span>Search practices (e.g. bank</span>
+        </div>
+
+        <!-- Format Picker -->
+        <div class="format-label">FORMAT</div>
+        <div class="format-tabs" style="margin-bottom:18px">
+          <div class="format-tab active" id="tab-phone" onclick="switchFormat('phone')">📞 Phone Calls (3)</div>
+          <div class="format-tab" id="tab-text" onclick="switchFormat('text')">💬 Text Msg</div>
+        </div>
+
+        <!-- Scenario 1 – Grandchild -->
+        <div class="card" style="margin-bottom:14px">
+          <div class="cat-label cat-danger">HIGH URGENCY SCAM</div>
+          <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:10px">
+            <div class="scenario-icon-wrap" style="background:#FDECEA">😢</div>
+            <div class="sc-title">Grandchild in Trouble</div>
+          </div>
+          <div class="sc-desc" style="margin-bottom:12px">An emotional voice call asking for immediate emergency bail money via wire transfer.</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+            <div class="chip">🕐 Medium • 4 min</div>
+            <div class="chip warn">⭐ Recommended Next</div>
+          </div>
+          <button class="btn-primary" onclick="showPhone('phone-briefing')">Start Practice →</button>
+        </div>
+
+        <!-- Scenario 2 – Bank Fraud (Completed) -->
+        <div class="card" style="margin-bottom:14px">
+          <div class="cat-label cat-primary">BANK IMPERSONATION</div>
+          <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:10px">
+            <div class="scenario-icon-wrap" style="background:#E8F0FA">📲</div>
+            <div class="sc-title">Fake Bank Fraud Alert</div>
+          </div>
+          <div class="sc-desc" style="margin-bottom:12px">Caller claims your debit card has been blocked and demands your secure PIN to unlock it.</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+            <div class="chip">🕐 Easy • 3 min</div>
+            <div class="chip safe">✅ Completed (+10 pts)</div>
+          </div>
+          <button class="btn-secondary" onclick="showPhone('phone-briefing')">↺ Practice Again</button>
+        </div>
+
+        <!-- Scenario 3 – IRS -->
+        <div class="card" style="margin-bottom:14px">
+          <div class="cat-label cat-danger">GOVERNMENT SCAM</div>
+          <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:10px">
+            <div class="scenario-icon-wrap" style="background:#FDECEA">🏛️</div>
+            <div class="sc-title">Fake IRS Agent Threat</div>
+          </div>
+          <div class="sc-desc" style="margin-bottom:12px">Caller aggressively threatens immediate police arrest unless back taxes are paid in gift cards.</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+            <div class="chip">🕐 Hard • 5 min</div>
+            <div class="chip">⭕ Unattempted</div>
+          </div>
+          <button class="btn-primary" onclick="showPhone('phone-briefing')">Start Practice →</button>
+        </div>
+
+        <!-- Scenario 4 – Tech Support -->
+        <div class="card" style="margin-bottom:14px">
+          <div class="cat-label cat-primary">REMOTE ACCESS SCAM</div>
+          <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:10px">
+            <div class="scenario-icon-wrap" style="background:#E8F0FA">💻</div>
+            <div class="sc-title">Tech Support Pop-Up</div>
+          </div>
+          <div class="sc-desc" style="margin-bottom:12px">Caller instructs you to install remote software to remove an alleged security virus on your computer.</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+            <div class="chip">🕐 Medium • 4 min</div>
+            <div class="chip">⭕ Unattempted</div>
+          </div>
+          <button class="btn-primary" onclick="showPhone('phone-briefing')">Start Practice →</button>
+        </div>
+
+        <!-- Help card -->
+        <div class="card" style="display:flex;gap:14px;align-items:flex-start">
+          <div style="font-size:32px;flex-shrink:0">❓</div>
+          <div>
+            <div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px">Need help choosing?</div>
+            <div class="body-lg">Tap the recommended practice above. It guides you step-by-step with voice tips.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- TAB BAR -->
+    <div class="tab-bar">
+      <div class="tab-item" onclick="showPhone('phone-home')">
+        <div class="tab-indicator"></div>
+        <div class="tab-icon">🏠</div>
+        <div class="tab-label">Home</div>
+      </div>
+      <div class="tab-item active">
+        <div class="tab-indicator"></div>
+        <div class="tab-icon">🎓</div>
+        <div class="tab-label">Practice</div>
+      </div>
+      <div class="tab-item">
+        <div class="tab-indicator"></div>
+        <div class="tab-icon">🛡️</div>
+        <div class="tab-label">Scam Check</div>
+      </div>
+      <div class="tab-item">
+        <div class="tab-indicator"></div>
+        <div class="tab-icon">👥</div>
+        <div class="tab-label">Family</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PHONE 3: BRIEFING ═══ -->
+<div class="phone-wrap">
+  <div class="screen-label">Scenario Briefing</div>
+  <div class="phone" id="phone-briefing">
+    <div class="screen">
+      <div class="nav-bar">
+        <div class="nav-back" onclick="showPhone('phone-selection')">‹ Practice Simulatio…</div>
+        <div class="nav-avatar">👤</div>
+      </div>
+      <div class="content">
+        <!-- Step dots -->
+        <div style="display:flex;align-items:center;justify-content:space-between;padding-top:8px;margin-bottom:18px">
+          <div class="step-dots">
+            <div class="step-dot active"></div>
+            <div class="step-dot"></div>
+            <div class="step-dot"></div>
+          </div>
+          <div class="body-lg" style="font-size:14px;font-weight:600">Step 1 of 3</div>
+        </div>
+
+        <!-- Icon -->
+        <div style="text-align:center;margin-bottom:16px">
+          <div class="briefing-icon-wrap">
+            📞
+            <div class="briefing-badge">🛡️</div>
+          </div>
+        </div>
+
+        <!-- Title -->
+        <div class="headline-xl" style="text-align:center;margin-bottom:10px">Fake Bank Fraud Alert</div>
+
+        <!-- Format pill -->
+        <div style="display:flex;justify-content:center;margin-bottom:18px">
+          <div class="format-pill">📞 Simulated Call  •  ~3 Minutes</div>
+        </div>
+
+        <!-- Safety reassurance -->
+        <div class="reassurance-card gap-md" style="margin-bottom:14px">
+          <div style="font-size:22px;flex-shrink:0">😊</div>
+          <div>
+            <div style="font-size:16px;font-weight:700;color:var(--primary-cont);margin-bottom:4px">You are completely safe.</div>
+            <div class="body-lg">This is only a quiet simulation. Nobody is actually listening, and your money is 100% untouched.</div>
+          </div>
+        </div>
+
+        <!-- Situation card -->
+        <div class="card" style="margin-bottom:14px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+            <div style="display:flex;align-items:center;gap:8px;font-size:17px;font-weight:700;color:var(--text)">📖 The Situation</div>
+            <div class="chip" style="font-size:13px">Story</div>
+          </div>
+          <div class="situation-img" style="margin-bottom:12px">
+            ☕
+            <div class="caller-id-overlay">📞 Caller ID: Bank Security Dept</div>
+          </div>
+          <div class="body-lg" style="color:var(--text)">Your telephone rings during your peaceful morning routine. The caller sounds urgent and speaks rapidly, claiming your debit card was just used in another state.</div>
+        </div>
+
+        <!-- Golden Rule -->
+        <div class="golden-rule" style="margin-bottom:16px">
+          <div class="golden-rule-title">🛡️ Golden Safety Rule</div>
+          <div class="golden-rule-phrase">Stop. Hang Up. Call Back.</div>
+          <div class="golden-rule-desc">You are always in control. Whenever you feel rushed, simply press end and dial the safe customer number printed right on the back of your plastic bank card.</div>
+        </div>
+
+        <!-- CTA -->
+        <button class="btn-primary" style="margin-bottom:12px" onclick="showPhone('phone-simulation')">I'm Ready — Start Call →</button>
+        <button class="back-home-btn" onclick="showPhone('phone-home')">🏠 Need a minute? Return to Home</button>
+      </div>
+    </div>
+    <!-- TAB BAR -->
+    <div class="tab-bar">
+      <div class="tab-item" onclick="showPhone('phone-home')">
+        <div class="tab-indicator"></div>
+        <div class="tab-icon">🏠</div>
+        <div class="tab-label">Home</div>
+      </div>
+      <div class="tab-item active">
+        <div class="tab-indicator"></div>
+        <div class="tab-icon">🎓</div>
+        <div class="tab-label">Practice</div>
+      </div>
+      <div class="tab-item">
+        <div class="tab-indicator"></div>
+        <div class="tab-icon">🛡️</div>
+        <div class="tab-label">Scam Check</div>
+      </div>
+      <div class="tab-item">
+        <div class="tab-indicator"></div>
+        <div class="tab-icon">👥</div>
+        <div class="tab-label">Family</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PHONE 4: LIVE SIMULATION ═══ -->
+<div class="phone-wrap">
+  <div class="screen-label">Live Simulation</div>
+  <div class="phone" id="phone-simulation">
+    <div class="screen">
+      <div class="nav-bar">
+        <div style="display:flex;align-items:center;gap:8px">
+          <div class="nav-back" onclick="showPhone('phone-briefing')">‹</div>
+          <div style="font-size:15px;font-weight:700;color:var(--text)">Bank Security<br>Call (Practice)</div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center">
+          <button class="pause-btn" id="pause-btn" onclick="togglePause()">⏸ Pause</button>
+          <div class="nav-avatar">👤</div>
+        </div>
+      </div>
+      <div class="content">
+        <!-- Caller Card -->
+        <div class="caller-card gap-md">
+          <div class="caller-icon">📞</div>
+          <div class="caller-info">
+            <div class="caller-name">National Bank Se…</div>
+            <div class="caller-num">+1 (800) 555-0199</div>
+          </div>
+          <div class="call-timer">
+            <div class="timer-dot"></div>
+            <div class="timer-val" id="timer-display">01:28</div>
+          </div>
+        </div>
+
+        <!-- Risk Meter -->
+        <div class="risk-meter-wrap gap-md">
+          <div class="risk-header">
+            <div class="risk-label-txt">SCAM<br>LIKELIHOOD</div>
+            <div class="risk-badge danger">⚠️ 85% — Very High Risk</div>
+          </div>
+          <div class="risk-bar-row">
+            <div class="risk-seg safe"></div>
+            <div class="risk-seg warn"></div>
+            <div class="risk-seg dang active"></div>
+          </div>
+          <div class="risk-labels-row">
+            <div class="risk-seg-label safe">✅ Safe</div>
+            <div class="risk-seg-label warn">⚠️ Suspicious</div>
+            <div class="risk-seg-label dang active-label">⛔ Scam</div>
+          </div>
+        </div>
+
+        <!-- Audio row -->
+        <div class="audio-row gap-md">
+          <span>🔊</span>
+          <span>Listening to simulated audio</span>
+          <div class="wave-bars">
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+          </div>
+        </div>
+
+        <!-- Message 1 -->
+        <div style="margin-top:14px">
+          <div class="speaker-label">🎤 Caller: "Officer Davis"</div>
+          <div class="msg-bubble">
+            "Ma'am, there is suspicious spending on your account. Someone in Miami is trying to charge $1,400 for electronics right now."
+          </div>
+        </div>
+
+        <!-- Message 2 -->
+        <div>
+          <div class="speaker-label">🎤 Caller: "Officer Davis"</div>
+          <div class="msg-bubble">
+            "To cancel this charge immediately, <span class="msg-danger">you must give me your 4-digit card PIN right this second</span> or the funds will be lost forever!"
+          </div>
+        </div>
+
+        <!-- Red Flag -->
+        <div class="red-flag-card">
+          <div class="red-flag-title">⚠️ Red Flag: Extreme Panic & Secret PIN Demand</div>
+          <div class="red-flag-body">Real banks will <strong>never</strong> ask for your secret 4-digit PIN over the phone. Urgency and panic are weapons scammers use to stop you from thinking clearly.</div>
+        </div>
+
+        <!-- Waiting row -->
+        <div class="waiting-row">
+          ⌛ <span>The caller is on the line waiting for your reaction…</span>
+        </div>
+
+        <!-- Safe Move -->
+        <div class="safe-move-header">
+          <div class="safe-move-title">What is your safe move?</div>
+          <div class="tap-hint">Tap one<br>option</div>
+        </div>
+
+        <button class="choice-btn" id="choice-0" onclick="selectChoice(0, false)">
+          <div class="choice-icon" id="icon-0">❌</div>
+          <div class="choice-text" id="text-0">Read my 4-digit PIN to the officer</div>
+          <div class="choice-chevron">›</div>
+        </button>
+
+        <button class="choice-btn" id="choice-1" onclick="selectChoice(1, true)">
+          <div class="choice-icon" id="icon-1">✅</div>
+          <div class="choice-text" id="text-1">Hang up and call the number on my card</div>
+          <div class="choice-chevron">›</div>
+        </button>
+      </div>
+    </div>
+    <!-- TAB BAR -->
+    <div class="tab-bar">
+      <div class="tab-item" onclick="showPhone('phone-home')">
+        <div class="tab-indicator"></div>
+        <div class="tab-icon">🏠</div>
+        <div class="tab-label">Home</div>
+      </div>
+      <div class="tab-item active">
+        <div class="tab-indicator"></div>
+        <div class="tab-icon">🎓</div>
+        <div class="tab-label">Practice</div>
+      </div>
+      <div class="tab-item">
+        <div class="tab-indicator"></div>
+        <div class="tab-icon">🛡️</div>
+        <div class="tab-label">Scam Check</div>
+      </div>
+      <div class="tab-item">
+        <div class="tab-indicator"></div>
+        <div class="tab-icon">👥</div>
+        <div class="tab-label">Family</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* ══════════════════════════════════════
+     TIMER
+  ══════════════════════════════════════ */
+  let totalSecs = 88;
+  let paused    = false;
+  let timerInterval;
+
+  function startTimer() {
+    clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+      if (!paused) {
+        totalSecs++;
+        const m = Math.floor(totalSecs / 60);
+        const s = totalSecs % 60;
+        const el = document.getElementById('timer-display');
+        if (el) el.textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+      }
+    }, 1000);
+  }
+
+  function togglePause() {
+    paused = !paused;
+    const btn = document.getElementById('pause-btn');
+    if (btn) btn.textContent = paused ? '▶ Resume' : '⏸ Pause';
+  }
+
+  startTimer();
+
+  /* ══════════════════════════════════════
+     CHOICE SELECTION
+  ══════════════════════════════════════ */
+  function selectChoice(idx, isCorrect) {
+    // Reset both
+    [0, 1].forEach(i => {
+      document.getElementById('choice-' + i).className = 'choice-btn';
+    });
+    const btn = document.getElementById('choice-' + idx);
+    btn.className = 'choice-btn ' + (isCorrect ? 'selected-right' : 'selected-wrong');
+  }
+
+  /* ══════════════════════════════════════
+     FORMAT TABS
+  ══════════════════════════════════════ */
+  function switchFormat(fmt) {
+    document.getElementById('tab-phone').className = fmt === 'phone' ? 'format-tab active' : 'format-tab';
+    document.getElementById('tab-text').className  = fmt === 'text'  ? 'format-tab active' : 'format-tab';
+  }
+
+  /* ══════════════════════════════════════
+     PHONE HIGHLIGHT (no hide — all visible)
+  ══════════════════════════════════════ */
+  function showPhone(id) {
+    // Scroll the target phone to top
+    const phone = document.getElementById(id);
+    if (phone) {
+      const screen = phone.querySelector('.screen');
+      if (screen) screen.scrollTop = 0;
+      phone.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // Pulse highlight
+      phone.style.boxShadow = '0 0 0 4px #A3CBF2, 0 30px 60px rgba(0,0,0,0.5)';
+      setTimeout(() => {
+        phone.style.boxShadow = '0 0 0 2px #1a1a1a, 0 0 0 8px #2a2a2a, 0 30px 60px rgba(0,0,0,0.5)';
+      }, 800);
+    }
+  }
+</script>
+</body>
+</html>
