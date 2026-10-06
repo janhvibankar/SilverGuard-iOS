@@ -7,10 +7,10 @@ struct LiveSimulationView: View {
     @Environment(\.dismiss) var dismiss
 
     @State private var isPaused = false
-    @State private var callSeconds = 88  // 01:28 shown in screenshot
+    @State private var callSeconds = 88  // 01:28 initial elapsed time
     @State private var timer: AnyCancellable? = nil
     @State private var showingResult = false
-    @State private var selectedAnswer: Int? = nil
+    @State private var selectedAnswer: String? = nil
 
     // Simulated conversation data
     private let messages: [SimMessage] = [
@@ -25,8 +25,8 @@ struct LiveSimulationView: View {
     ]
 
     private let choices = [
-        SimChoice(id: 0, text: "Read my 4-digit PIN to the officer", isCorrect: false),
-        SimChoice(id: 1, text: "Hang up and call the number on my card", isCorrect: true)
+        SimChoice(id: "give_pin", text: "Read my 4-digit PIN to the officer", isCorrect: false),
+        SimChoice(id: "hang_up_call_card", text: "Hang up and call the number on my card", isCorrect: true)
     ]
 
     var body: some View {
@@ -86,8 +86,25 @@ struct LiveSimulationView: View {
                 // ─── Safe move choices ────────────────────────────────
                 SafeMoveSection(choices: choices,
                                 selectedAnswer: $selectedAnswer,
-                                onSelect: { idx in
-                                    withAnimation { selectedAnswer = idx }
+                                onSelect: { answerId in
+                                    guard selectedAnswer == nil else { return }
+                                    withAnimation { selectedAnswer = answerId }
+                                    stopTimer()
+
+                                    if let choice = choices.first(where: { $0.id == answerId }) {
+                                        Task {
+                                            await state.recordSimulationCompletion(
+                                                scenario: scenario,
+                                                answerId: choice.id,
+                                                isCorrect: choice.isCorrect,
+                                                durationSeconds: callSeconds
+                                            )
+                                        }
+                                    }
+
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                                        showingResult = true
+                                    }
                                 })
                     .padding(.horizontal, SGSpacing.gutter)
                     .padding(.bottom, 40)
@@ -129,6 +146,14 @@ struct LiveSimulationView: View {
                     }
                     .frame(width: 44, height: 44)
                 }
+            }
+        }
+        .sheet(isPresented: $showingResult) {
+            let choice = choices.first(where: { $0.id == selectedAnswer })
+            let isCorrect = choice?.isCorrect ?? false
+            SimulationResultSheet(isCorrect: isCorrect, score: isCorrect ? 10 : 2) {
+                showingResult = false
+                dismiss()
             }
         }
         .onAppear { startTimer() }
@@ -245,7 +270,7 @@ struct SimMessage: Identifiable {
 
 // MARK: - Sim Choice Model
 struct SimChoice: Identifiable {
-    let id: Int
+    let id: String
     let text: String
     let isCorrect: Bool
 }
@@ -324,8 +349,8 @@ private struct RedFlagCard: View {
 // MARK: - Safe Move Section
 private struct SafeMoveSection: View {
     let choices: [SimChoice]
-    @Binding var selectedAnswer: Int?
-    let onSelect: (Int) -> Void
+    @Binding var selectedAnswer: String?
+    let onSelect: (String) -> Void
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -414,6 +439,56 @@ private struct SafeMoveButton: View {
         .silverCardShadow()
         .accessibilityLabel(choice.text)
         .accessibilityHint(isSelected ? (choice.isCorrect ? "Correct answer" : "Incorrect answer") : "Tap to select")
+    }
+}
+
+// MARK: - Simulation Result Completion Sheet
+private struct SimulationResultSheet: View {
+    let isCorrect: Bool
+    let score: Int
+    let onDismiss: () -> Void
+
+    var body: some View {
+        VStack(spacing: 20) {
+            ZStack {
+                Circle()
+                    .fill(isCorrect ? Color.silverSafeContainer : Color.silverWarningContainer)
+                    .frame(width: 80, height: 80)
+                Image(systemName: isCorrect ? "checkmark.shield.fill" : "shield.slash.fill")
+                    .font(.system(size: 40))
+                    .foregroundColor(isCorrect ? Color.silverSafe : Color.silverWarning)
+            }
+            .padding(.top, 28)
+
+            Text(isCorrect ? "Safe Move Confirmed!" : "Review & Practice Again")
+                .font(SilverGuardTypography.headlineLG)
+                .foregroundColor(Color.silverText)
+
+            Text(isCorrect ? "You recognized the pressure tactic immediately. Real banks will never demand your private 4-digit PIN over the phone." : "Urgency is a weapon scammers use to induce panic. Remember the Golden Rule: Stop, Hang Up, and Call the number on the back of your card.")
+                .font(SilverGuardTypography.bodyLG)
+                .foregroundColor(Color.silverSecondaryText)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, SGSpacing.gutter)
+
+            HStack(spacing: 8) {
+                Image(systemName: "star.fill")
+                    .foregroundColor(Color.silverWarning)
+                Text("+\(score) Safety Points Recorded")
+                    .font(.system(size: 16, weight: .bold))
+                    .foregroundColor(Color.silverPrimaryContainer)
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 8)
+            .background(Capsule().fill(Color.silverPracticeBackground))
+
+            PrimaryButton(title: "Return to Practices", action: onDismiss)
+                .padding(.horizontal, SGSpacing.gutter)
+                .padding(.top, 8)
+
+            Spacer()
+        }
+        .presentationDetents([.medium])
+        .background(Color.silverBackground.ignoresSafeArea())
     }
 }
 

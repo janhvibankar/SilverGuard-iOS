@@ -1,0 +1,83 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // ─── 1. Global Scenarios ───────────────────────────────────────────────
+    // Global scam scenarios are read-only for authenticated clients.
+    // Client write/update/delete is completely disabled.
+    match /scenarios/{scenarioId} {
+      allow read: if isAuthenticated();
+      allow write: if false;
+    }
+
+    // ─── 2. User Data Subcollections ──────────────────────────────────────
+    match /users/{userId} {
+      // Optional root document access
+      allow read, write: if isOwner(userId);
+
+      // User Profile: users/{userId}/profile/data
+      match /profile/{document=**} {
+        allow read, write: if isOwner(userId);
+      }
+
+      // Scenario Progress: users/{userId}/scenarioProgress/{scenarioId}
+      match /scenarioProgress/{scenarioId} {
+        allow read, write: if isOwner(userId);
+      }
+
+      // Simulation Results: users/{userId}/simulationResults/{resultId}
+      // Immutable audit trail: creation is allowed, but modification and deletion are denied.
+      match /simulationResults/{resultId} {
+        allow read, create: if isOwner(userId);
+        allow update, delete: if false;
+      }
+
+      // Family Connections: users/{userId}/familyConnections/{connectionId}
+      match /familyConnections/{connectionId} {
+        allow read, write: if isOwner(userId);
+      }
+    }
+
+    // ─── 3. Family Invitations ────────────────────────────────────────────
+    match /familyInvitations/{invitationId} {
+      // Creation: Only authenticated sender can create, status must start as 'pending'
+      allow create: if isAuthenticated()
+                    && request.resource.data.senderUserId == request.auth.uid
+                    && request.resource.data.status == 'pending'
+                    && request.resource.data.recipientEmail is string;
+
+      // Read: Only the verified sender OR the recipient verified via Firebase Auth token email
+      allow read: if isAuthenticated() && (
+        resource.data.senderUserId == request.auth.uid ||
+        (request.auth.token.email != null && resource.data.recipientEmail == request.auth.token.email)
+      );
+
+      // Update:
+      // Sender can cancel/revoke; Recipient (verified by token email claim) can accept/decline.
+      // Sender and recipient IDs are strictly immutable.
+      allow update: if isAuthenticated() && (
+        (resource.data.senderUserId == request.auth.uid) ||
+        (request.auth.token.email != null && resource.data.recipientEmail == request.auth.token.email)
+      ) && request.resource.data.senderUserId == resource.data.senderUserId
+        && request.resource.data.recipientEmail == resource.data.recipientEmail
+        && request.resource.data.status in ['pending', 'accepted', 'declined', 'expired'];
+
+      // Delete: Only the sender can delete an invitation
+      allow delete: if isAuthenticated() && resource.data.senderUserId == request.auth.uid;
+    }
+
+    // ─── Default Deny ─────────────────────────────────────────────────────
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

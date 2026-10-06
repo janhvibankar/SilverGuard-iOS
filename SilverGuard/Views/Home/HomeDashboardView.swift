@@ -10,14 +10,14 @@ struct HomeDashboardView: View {
                 VStack(alignment: .leading, spacing: SGSpacing.md) {
 
                     // ─── Greeting ─────────────────────────────────────
-                    GreetingRow()
+                    GreetingRow(name: state.userProfile?.displayName ?? "Margaret")
                         .padding(.top, 4)
 
                     // ─── Trust Score Card ──────────────────────────────
                     TrustScoreCard(state: state)
 
                     // ─── Today's Practice Card ─────────────────────────
-                    TodaysPracticeCard(scenario: Scenario.featuredScenario,
+                    TodaysPracticeCard(scenario: state.scenarios.first(where: { $0.id == "fake_bank_fraud_alert" }) ?? Scenario.featuredScenario,
                                        onStart: { selectedTab = 1 })
 
                     // ─── Stats Row ─────────────────────────────────────
@@ -77,6 +77,8 @@ struct HomeDashboardView: View {
 
 // MARK: - Greeting Row
 private struct GreetingRow: View {
+    var name: String = "Margaret"
+
     private var greeting: String {
         let h = Calendar.current.component(.hour, from: Date())
         if h < 12 { return "Good morning," }
@@ -95,7 +97,7 @@ private struct GreetingRow: View {
                 Text(greeting)
                     .font(SilverGuardTypography.headlineLG)
                     .foregroundColor(Color.silverText)
-                Text("Margaret")
+                Text(name)
                     .font(SilverGuardTypography.headlineLG)
                     .foregroundColor(Color.silverText)
                 Text("\(dateString) • Let's keep your accounts safe")

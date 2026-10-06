@@ -26,6 +26,17 @@
 		AA000017 /* ScamCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100017 /* ScamCheckView.swift */; };
 		AA000018 /* FamilyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100018 /* FamilyView.swift */; };
 		AA000019 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA100019 /* Assets.xcassets */; };
+		AA000020 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AA100020 /* GoogleService-Info.plist */; };
+		AA000021 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = AA_DEP_FIREBASE_CORE /* FirebaseCore */; };
+		AA000022 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = AA_DEP_FIREBASE_AUTH /* FirebaseAuth */; };
+		AA000023 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = AA_DEP_FIREBASE_FIRESTORE /* FirebaseFirestore */; };
+		AA000024 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = AA_DEP_FIREBASE_FIRESTORE_SWIFT /* FirebaseFirestoreSwift */; };
+		AA000031 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100031 /* UserProfile.swift */; };
+		AA000032 /* ScenarioProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100032 /* ScenarioProgress.swift */; };
+		AA000033 /* SimulationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100033 /* SimulationResult.swift */; };
+		AA000034 /* FamilyConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100034 /* FamilyConnection.swift */; };
+		AA000035 /* FamilyInvitation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100035 /* FamilyInvitation.swift */; };
+		AA000036 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100036 /* FirebaseService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +59,13 @@
 		AA100017 /* ScamCheckView.swift */         = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScamCheckView.swift;         sourceTree = "<group>"; };
 		AA100018 /* FamilyView.swift */            = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyView.swift;            sourceTree = "<group>"; };
 		AA100019 /* Assets.xcassets */             = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets;          sourceTree = "<group>"; };
+		AA100020 /* GoogleService-Info.plist */     = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist";      sourceTree = "<group>"; };
+		AA100031 /* UserProfile.swift */           = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift;           sourceTree = "<group>"; };
+		AA100032 /* ScenarioProgress.swift */      = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScenarioProgress.swift;      sourceTree = "<group>"; };
+		AA100033 /* SimulationResult.swift */      = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimulationResult.swift;      sourceTree = "<group>"; };
+		AA100034 /* FamilyConnection.swift */      = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyConnection.swift;      sourceTree = "<group>"; };
+		AA100035 /* FamilyInvitation.swift */      = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyInvitation.swift;      sourceTree = "<group>"; };
+		AA100036 /* FirebaseService.swift */       = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift;       sourceTree = "<group>"; };
 		AA200000 /* SilverGuard.app */             = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0;               path = SilverGuard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA300000 /* Info.plist */                  = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist;                    sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -72,11 +90,13 @@
 		AA_SILVERGUARD = {
 			isa = PBXGroup;
 			children = (
+				AA100020 /* GoogleService-Info.plist */,
 				AA_APP        /* App */,
 				AA_MODELS     /* Models */,
 				AA_VIEWS      /* Views */,
 				AA_COMPONENTS /* Components */,
 				AA_THEME      /* Theme */,
+				AA_SERVICES   /* Services */,
 				AA_RESOURCES  /* Resources */,
 			);
 			name = SilverGuard;
@@ -97,6 +117,11 @@
 			children = (
 				AA100005 /* Scenario.swift */,
 				AA100006 /* PracticeState.swift */,
+				AA100031 /* UserProfile.swift */,
+				AA100032 /* ScenarioProgress.swift */,
+				AA100033 /* SimulationResult.swift */,
+				AA100034 /* FamilyConnection.swift */,
+				AA100035 /* FamilyInvitation.swift */,
 			);
 			name = Models;
 			path = Models;
@@ -177,6 +202,15 @@
 			path = Theme;
 			sourceTree = "<group>";
 		};
+		AA_SERVICES = {
+			isa = PBXGroup;
+			children = (
+				AA100036 /* FirebaseService.swift */,
+			);
+			name = Services;
+			path = Services;
+			sourceTree = "<group>";
+		};
 		AA_RESOURCES = {
 			isa = PBXGroup;
 			children = (
@@ -195,11 +229,18 @@
 			buildConfigurationList = AA_CFGLIST;
 			buildPhases = (
 				AA_SOURCES   /* Sources */,
+				AA_FRAMEWORKS /* Frameworks */,
 				AA_RESOURCES_PHASE /* Resources */,
 			);
 			buildRules = ();
 			dependencies = ();
 			name = SilverGuard;
+			packageProductDependencies = (
+				AA_DEP_FIREBASE_CORE /* FirebaseCore */,
+				AA_DEP_FIREBASE_AUTH /* FirebaseAuth */,
+				AA_DEP_FIREBASE_FIRESTORE /* FirebaseFirestore */,
+				AA_DEP_FIREBASE_FIRESTORE_SWIFT /* FirebaseFirestoreSwift */,
+			);
 			productName = SilverGuard;
 			productReference = AA200000 /* SilverGuard.app */;
 			productType = "com.apple.product-type.application";
@@ -228,6 +269,9 @@
 				Base,
 			);
 			mainGroup = AA_ROOT;
+			packageReferences = (
+				AA_FIREBASE_PKG /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = AA_PRODUCTS;
 			projectDirPath = "";
 			projectRoot = "";
@@ -260,10 +304,30 @@
 				AA000016 /* LiveSimulationView.swift in Sources */,
 				AA000017 /* ScamCheckView.swift in Sources */,
 				AA000018 /* FamilyView.swift in Sources */,
+				AA000031 /* UserProfile.swift in Sources */,
+				AA000032 /* ScenarioProgress.swift in Sources */,
+				AA000033 /* SimulationResult.swift in Sources */,
+				AA000034 /* FamilyConnection.swift in Sources */,
+				AA000035 /* FamilyInvitation.swift in Sources */,
+				AA000036 /* FirebaseService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AA_FRAMEWORKS = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA000021 /* FirebaseCore in Frameworks */,
+				AA000022 /* FirebaseAuth in Frameworks */,
+				AA000023 /* FirebaseFirestore in Frameworks */,
+				AA000024 /* FirebaseFirestoreSwift in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXResourcesBuildPhase section */
 		AA_RESOURCES_PHASE = {
@@ -271,10 +335,45 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA000019 /* Assets.xcassets in Resources */,
+				AA000020 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		AA_FIREBASE_PKG /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.20.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AA_DEP_FIREBASE_CORE /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA_FIREBASE_PKG /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		AA_DEP_FIREBASE_AUTH /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA_FIREBASE_PKG /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		AA_DEP_FIREBASE_FIRESTORE /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA_FIREBASE_PKG /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		AA_DEP_FIREBASE_FIRESTORE_SWIFT /* FirebaseFirestoreSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA_FIREBASE_PKG /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestoreSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCBuildConfiguration section */
 		AA_DEBUG_TARGET = {

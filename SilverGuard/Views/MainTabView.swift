@@ -16,7 +16,7 @@ struct MainTabView: View {
                 ScamCheckView()
                     .tag(2)
 
-                FamilyView()
+                FamilyView(state: practiceState)
                     .tag(3)
             }
             // Hide the default iOS tab bar — we use our own

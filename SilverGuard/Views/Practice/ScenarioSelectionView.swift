@@ -7,7 +7,8 @@ struct ScenarioSelectionView: View {
     @State private var navigationPath = NavigationPath()
 
     private var filteredScenarios: [Scenario] {
-        Scenario.mockScenarios.filter { s in
+        let list = state.scenarios.isEmpty ? Scenario.mockScenarios : state.scenarios
+        return list.filter { s in
             s.format == selectedFormat &&
             (searchText.isEmpty || s.title.localizedCaseInsensitiveContains(searchText)
              || s.description.localizedCaseInsensitiveContains(searchText))
@@ -126,8 +127,9 @@ struct ScenarioSelectionView: View {
                     }
                 }
             }
-            .navigationDestination(for: UUID.self) { id in
-                if let scenario = Scenario.mockScenarios.first(where: { $0.id == id }) {
+            .navigationDestination(for: String.self) { id in
+                let list = state.scenarios.isEmpty ? Scenario.mockScenarios : state.scenarios
+                if let scenario = list.first(where: { $0.id == id }) {
                     ScenarioBriefingView(scenario: scenario, state: state)
                 }
             }
@@ -135,7 +137,8 @@ struct ScenarioSelectionView: View {
     }
 
     private var phoneCount: Int {
-        Scenario.mockScenarios.filter { $0.format == .phoneCall }.count
+        let list = state.scenarios.isEmpty ? Scenario.mockScenarios : state.scenarios
+        return list.filter { $0.format == .phoneCall }.count
     }
 }
 
